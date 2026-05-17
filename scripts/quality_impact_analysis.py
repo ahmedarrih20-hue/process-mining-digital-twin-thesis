@@ -1,7 +1,4 @@
-
 # Script: quality_impact_analysis.py
-# Purpose: Combine cleaning, discovery, and evaluation results into one analysis table.
-# Output: outputs/tables/quality_impact_analysis.csv
 import os
 import pandas as pd
 # Create output folder
