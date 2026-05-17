@@ -1,4 +1,0 @@
-dataset,events,cases,activities,variants,model_file,image_file
-BPI,261914,13087,24,4429,bpi_model.pnml,bpi_model.png
-Sepsis,15207,1050,16,845,sepsis_model.pnml,sepsis_model.png
-Insurance,73341,8149,9,1002,insurance_model.pnml,insurance_model.png

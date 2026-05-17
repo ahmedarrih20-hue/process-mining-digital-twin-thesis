@@ -1,4 +1,0 @@
-dataset,fitness,precision,f1_score,percentage_of_fitting_traces
-BPI,0.9682,0.134,0.2354,61.73
-Sepsis,1,0.2577,0.4098,100
-Insurance,1,0.9069,0.9512,100

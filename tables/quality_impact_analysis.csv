@@ -1,4 +1,0 @@
-dataset,events,cases,activities,variants,complexity_level,fitness,fitness_level,precision,precision_level,f1_score,percentage_of_fitting_traces,invalid_timestamps,duplicates_removed,empty_activity_removed,total_cleaning_changes,interpretation
-BPI,261914,13087,24,4429,High,0.9682,High,0.134,Low,0.2354,61.73,0,0,0,0,High fitness but low precision
-Sepsis,15207,1050,16,845,Low,1.0,High,0.2577,Low,0.4098,100.0,0,7,0,7,High fitness but low precision
-Insurance,73341,8149,9,1002,Medium,1.0,High,0.9069,High,0.9512,100.0,0,0,0,0,Very good model quality
