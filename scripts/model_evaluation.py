@@ -10,7 +10,6 @@ datasets = [
     ("Sepsis", "outputs/cleaned_data/sepsis_cleaned.csv", "outputs/models/sepsis_model.pnml"),
     ("Insurance", "outputs/cleaned_data/insurance_cleaned.csv", "outputs/models/insurance_model.pnml")
 ]
-
 for dataset_name, log_path, model_path in datasets:
     print(f"Evaluating {dataset_name}")
     
@@ -33,7 +32,6 @@ for dataset_name, log_path, model_path in datasets:
         activity_key="concept:name",
         timestamp_key="time:timestamp"
     )
-
     net, initial_marking, final_marking = pm4py.read_pnml(model_path)
     # Calculate fitness using token-based replay
     fitness_result = pm4py.fitness_token_based_replay(
@@ -61,7 +59,7 @@ for dataset_name, log_path, model_path in datasets:
         f1_score = 2 * (fitness_value * precision_value) / (fitness_value + precision_value)
     else:
         f1_score = None
-   # Store evaluation
+    # Store evaluation
     results.append({
         "dataset": dataset_name,
         "fitness": round(fitness_value, 4) if fitness_value is not None else None,
@@ -73,7 +71,6 @@ for dataset_name, log_path, model_path in datasets:
     print(f"{dataset_name} done")
     print("Fitness:", round(fitness_value, 4) if fitness_value is not None else "None")
     print("Precision:", round(precision_value, 4) if precision_value is not None else "None")
-    print()
 # Save all model-quality
 summary = pd.DataFrame(results)
 summary.to_csv("outputs/tables/model_evaluation_summary.csv", index=False)
