@@ -1,15 +1,19 @@
+
+# Script: quality_impact_analysis.py
+# Purpose: Combine cleaning, discovery, and evaluation results into one analysis table.
+# Output: outputs/tables/quality_impact_analysis.csv
 import os
 import pandas as pd
-
+# Create output folder
 os.makedirs("outputs/tables", exist_ok=True)
-
+# Load cleaning result tables
 bpi_cleaning = pd.read_csv("outputs/tables/bpi_cleaning.csv")
 sepsis_cleaning = pd.read_csv("outputs/tables/sepsis_cleaning.csv")
 insurance_cleaning = pd.read_csv("outputs/tables/insurance_cleaning.csv")
-
+# Load discovery and model-quality evaluation
 discovery = pd.read_csv("outputs/tables/process_discovery_summary.csv")
 evaluation = pd.read_csv("outputs/tables/model_evaluation_summary.csv")
-
+# Combine cleaning results for all event log  into one table
 cleaning = pd.DataFrame([
     {
         "dataset": "BPI",
@@ -30,7 +34,7 @@ cleaning = pd.DataFrame([
         "empty_activity_removed": insurance_cleaning.loc[0, "empty_activity_removed"]
     }
 ])
-
+# Merge discovery, evaluation and cleaning results
 final_table = discovery.merge(evaluation, on="dataset", how="inner")
 final_table = final_table.merge(cleaning, on="dataset", how="left")
 
@@ -39,7 +43,7 @@ final_table["total_cleaning_changes"] = (
     final_table["duplicates_removed"] +
     final_table["empty_activity_removed"]
 )
-
+# Classify process complexity based on the number of trace variants
 def complexity_level(variants):
     if variants > 3000:
         return "High"
@@ -47,7 +51,7 @@ def complexity_level(variants):
         return "Medium"
     else:
         return "Low"
-
+# Classify precision values
 def precision_level(value):
     if value >= 0.8:
         return "High"
@@ -55,7 +59,7 @@ def precision_level(value):
         return "Medium"
     else:
         return "Low"
-
+# Classify fitness values
 def fitness_level(value):
     if value >= 0.95:
         return "High"
@@ -63,7 +67,7 @@ def fitness_level(value):
         return "Medium"
     else:
         return "Low"
-
+# Add a short interpretation for each discovered model
 def short_interpretation(row):
     if row["fitness"] >= 0.95 and row["precision"] >= 0.80:
         return "Very good model quality"
@@ -78,7 +82,7 @@ final_table["complexity_level"] = final_table["variants"].apply(complexity_level
 final_table["fitness_level"] = final_table["fitness"].apply(fitness_level)
 final_table["precision_level"] = final_table["precision"].apply(precision_level)
 final_table["interpretation"] = final_table.apply(short_interpretation, axis=1)
-
+# Select the columns used in the final quality-impact analysis table
 final_table = final_table[
     [
         "dataset",
@@ -100,8 +104,7 @@ final_table = final_table[
         "interpretation"
     ]
 ]
-
+# Save the final analysis
 final_table.to_csv("outputs/tables/quality_impact_analysis.csv", index=False)
-
 print("Quality impact analysis finished")
 print(final_table)
