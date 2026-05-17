@@ -8,7 +8,7 @@ os.makedirs("outputs/tables", exist_ok=True)
 def prepare_log(df, minimal=True):
 
     df = df.copy()
-
+ # Convert required event-log columns to the correct types
     df["case:concept:name"] = df["case:concept:name"].astype(str)
     df["concept:name"] = df["concept:name"].astype(str)
     df["time:timestamp"] = pd.to_datetime(df["time:timestamp"], errors="coerce")
@@ -49,7 +49,7 @@ def evaluate_dataset(dataset_name, version_name, df):
         timestamp_key="time:timestamp"
     )
 
-    # Process discovery
+    # Process discovery into a Petri net
     process_tree = pm4py.discover_process_tree_inductive(event_log)
     net, initial_marking, final_marking = pm4py.convert_to_petri_net(process_tree)
 
@@ -61,7 +61,7 @@ def evaluate_dataset(dataset_name, version_name, df):
     image_path = f"outputs/models/raw_vs_cleaned/{dataset_name.lower()}_{version_name.lower()}_model.png"
     pm4py.save_vis_petri_net(net, initial_marking, final_marking, image_path)
 
-    # Evaluation
+    # Calculate fitness using token-based replay
     fitness_result = pm4py.fitness_token_based_replay(
         event_log,
         net,
@@ -106,9 +106,7 @@ def evaluate_dataset(dataset_name, version_name, df):
     }
 
 
-# --------------------------------------------------
 # Load raw datasets
-# --------------------------------------------------
 
 # BPI raw
 bpi_log = pm4py.read_xes("BPI_Challenge_2012.xes")
@@ -130,7 +128,9 @@ insurance_raw = insurance_raw.rename(columns={
 bpi_cleaned = pd.read_csv("outputs/cleaned_data/bpi_cleaned.csv")
 sepsis_cleaned = pd.read_csv("outputs/cleaned_data/sepsis_cleaned.csv")
 insurance_cleaned = pd.read_csv("outputs/cleaned_data/insurance_cleaned.csv")
-datasets = [
+
+# Define raw and cleaned configurations for each dataset
+datasets = [                                      
     ("BPI", "Raw", prepare_log(bpi_raw, minimal=True)),
     ("BPI", "Cleaned", prepare_log(bpi_cleaned, minimal=False)),
 
@@ -142,13 +142,12 @@ datasets = [
 ]
 
 results = []
-
+# Run discovery and evaluation
 for dataset_name, version_name, df in datasets:
     result = evaluate_dataset(dataset_name, version_name, df)
     results.append(result)
-
+# Save raw-versus-cleaned comparison results
 comparison = pd.DataFrame(results)
-
 comparison.to_csv(
     "outputs/tables/raw_vs_cleaned_model_quality.csv",
     index=False
