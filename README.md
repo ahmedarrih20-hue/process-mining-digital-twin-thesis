@@ -1,6 +1,6 @@
 # Process Mining Digital Twin Thesis
 
-This repository contains the Python scripts used in the master thesis:
+This repository contains the Python scripts and selected result files used in the master thesis:
 
 **Process Mining Approach for Building Process Digital Twins**
 
@@ -9,7 +9,8 @@ The scripts support:
 - process discovery using Inductive Miner
 - Petri-net model evaluation
 - raw and cleaned event-log comparison
-- final result-table generation
+- quality impact analysis
+- result-table generation
 
 ## Repository structure
 
@@ -19,20 +20,30 @@ Cleaning and preprocessing of the BPI Challenge 2012 event log.
 scripts/sepsis.py  
 Cleaning and preprocessing of the Sepsis Cases event log.
 
-scripts/insurrance1.py  
+scripts/insurance.py  
 Cleaning and preprocessing of the Insurance Claims event log.
 
-scripts/model_evaluation1.py  
-Calculation of fitness, precision, F1-score, and fitting traces.
+scripts/discovery.py  
+Process discovery using Inductive Miner and Petri-net export.
+
+scripts/model_evaluation.py  
+Calculation of fitness, precision, F1-score, and fitting-trace percentage.
 
 scripts/raw_vs_cleaned_experiment.py  
 Comparison between raw and cleaned event-log configurations.
 
-scripts/quality_impact_analysis1.py  
-Generation of the quality impact analysis table.
+scripts/quality_impact_analysis.py  
+Generation of the quality impact analysis table by combining discovery, evaluation, and cleaning results.
 
-scripts/final_analysis1.py  
-Generation of the final model comparison table.
+## Results
+
+Selected generated result files are stored in the results folder.
+
+results/tables/  
+Contains CSV tables with dataset summaries, cleaning results, model-quality evaluation results, and raw-versus-cleaned comparison results.
+
+results/figures/  
+Contains selected figures generated during the experiment.
 
 ## Datasets
 
@@ -44,4 +55,11 @@ They can be accessed from the dataset sources referenced in the thesis.
 Python 3.x  
 pandas  
 pm4py  
-matplotlib
+matplotlib  
+numpy
+
+## Notes
+
+The scripts include comments explaining the main processing steps.
+
+This repository is used as supporting material for the thesis and does not include the original datasets.
