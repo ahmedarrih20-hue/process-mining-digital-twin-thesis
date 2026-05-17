@@ -1,0 +1,7 @@
+dataset,version,events,cases,activities,variants,fitness,precision,f1_score,percentage_of_fitting_traces,model_file,image_file
+BPI,Raw,262200,13087,24,4366,0.9734,0.1291,0.2279,61.71,outputs/models/raw_vs_cleaned/bpi_raw_model.pnml,outputs/models/raw_vs_cleaned/bpi_raw_model.png
+BPI,Cleaned,261914,13087,24,4429,0.9682,0.134,0.2354,61.73,outputs/models/raw_vs_cleaned/bpi_cleaned_model.pnml,outputs/models/raw_vs_cleaned/bpi_cleaned_model.png
+Sepsis,Raw,15214,1050,16,846,1.0,0.2576,0.4097,100.0,outputs/models/raw_vs_cleaned/sepsis_raw_model.pnml,outputs/models/raw_vs_cleaned/sepsis_raw_model.png
+Sepsis,Cleaned,15207,1050,16,845,1.0,0.2577,0.4098,100.0,outputs/models/raw_vs_cleaned/sepsis_cleaned_model.pnml,outputs/models/raw_vs_cleaned/sepsis_cleaned_model.png
+Insurance,Raw,73341,8149,9,1002,1.0,0.9069,0.9512,100.0,outputs/models/raw_vs_cleaned/insurance_raw_model.pnml,outputs/models/raw_vs_cleaned/insurance_raw_model.png
+Insurance,Cleaned,73341,8149,9,1002,1.0,0.9069,0.9512,100.0,outputs/models/raw_vs_cleaned/insurance_cleaned_model.pnml,outputs/models/raw_vs_cleaned/insurance_cleaned_model.png
