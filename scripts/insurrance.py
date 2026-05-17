@@ -7,10 +7,8 @@ os.makedirs("outputs/cleaned_data", exist_ok=True)
 os.makedirs("outputs/tables", exist_ok=True)
 os.makedirs("outputs/figures", exist_ok=True)
 
-print("Loading dataset...")
-
+print("Loading dataset")
 df = pd.read_csv("Insurance_Event_Log.csv")
-
 print("Dataset loaded")
 print("Shape:", df.shape)
 
@@ -33,17 +31,13 @@ df["time:timestamp"] = pd.to_datetime(df["time:timestamp"], errors="coerce")
 
 # cleaning
 invalid_timestamps = df["time:timestamp"].isna().sum()
-
 df = df.dropna(subset=["case:concept:name", "concept:name", "time:timestamp"])
-
 rows_before = len(df)
 df = df.drop_duplicates(subset=["case:concept:name", "concept:name", "time:timestamp"])
 duplicates_removed = rows_before - len(df)
-
 rows_before = len(df)
 df = df[df["concept:name"].str.strip() != ""]
 empty_removed = rows_before - len(df)
-
 df = df.sort_values(by=["case:concept:name", "time:timestamp"]).reset_index(drop=True)
 
 # remove short cases
@@ -149,7 +143,7 @@ plt.ylabel("Events")
 plt.tight_layout()
 plt.savefig("outputs/figures/insurance_events_over_time.png")
 plt.close()
-
+# print results
 print("Cleaning finished")
 print("Events before:", num_events_before)
 print("Events after:", num_events_after)
